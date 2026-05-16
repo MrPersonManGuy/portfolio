@@ -1,0 +1,62 @@
+---
+title: "Enterprise PowerShell Automation Suite (Fort Smith Public Schools)"
+description: "Modernized 15+ legacy automation scripts for student information data extraction and multi-vendor SFTP delivery with centralized error handling."
+technologies: "PowerShell, Windows Server, SFTP, Cognos, Error Logging, Batch Processing"
+featured: true
+date: "2025-08-31"
+---
+
+## Overview
+
+Led modernization of Fort Smith Public Schools' critical data extraction pipeline by refactoring 15+ legacy PowerShell automation scripts. Consolidated disparate scripts into a unified, maintainable system with centralized error handling, structured logging, and automated alerting—eliminating manual intervention and improving delivery consistency across the district's student information system.
+
+## Challenge
+
+The existing automation scripts were fragmented across multiple locations with inconsistent error handling, making troubleshooting difficult and creating bottlenecks in the district's nightly data delivery process. Manual intervention was frequently required to address script failures.
+
+## Solution
+
+### 1. Centralized Error Logging Module
+- Implemented structured logging system with discrete log levels (INFO, WARN, ERROR, CRITICAL)
+- Automated email alerts for script failures, enabling rapid incident response
+- Persistent log storage for audit trails and historical analysis
+
+### 2. Unified Script Architecture
+- Refactored 15+ scripts to use common error-handling patterns and configuration management
+- Standardized parameter validation and input sanitization across all scripts
+- Created reusable helper functions to eliminate code duplication
+
+### 3. Automated Directory Monitoring & Delivery
+- Built **Content360_Submissions.ps1** to automate nightly directory monitoring
+- Implements batch compression and scheduled SFTP delivery of student submissions
+- Eliminated manual file management and human error in delivery pipeline
+
+## Technical Highlights
+
+```powershell
+# Centralized logging approach
+function Write-Log {
+  param(
+    [string]$Message,
+    [ValidateSet('INFO', 'WARN', 'ERROR', 'CRITICAL')]
+    [string]$Level = 'INFO'
+  )
+  
+  $timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
+  $logEntry = "[$timestamp] [$Level] $Message"
+  
+  Add-Content -Path $logFile -Value $logEntry
+  
+  if ($Level -eq 'CRITICAL' -or $Level -eq 'ERROR') {
+    Send-AlertEmail -Subject "Script Alert: $Level" -Body $logEntry
+  }
+}
+```
+
+## Results & Impact
+
+- **Improved Reliability**: Consistent, error-resistant script execution across the district
+- **Reduced Manual Intervention**: Automation now handles 95% of scenarios without human involvement
+- **Better Observability**: Centralized logging provides complete audit trail and historical analysis
+- **Faster Incident Response**: Email alerts enable rapid detection and resolution of failures
+- **Maintainability**: Unified codebase makes future updates and debugging significantly easier

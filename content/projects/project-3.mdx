@@ -1,0 +1,65 @@
+---
+title: "Heliospheric Turbulence Analysis via Signal Reconstruction (RIPP Program)"
+description: "Developed MATLAB signal processing pipeline to reconstruct gapped spacecraft data using compressed sensing for heliospheric turbulence analysis."
+technologies: "MATLAB, Compressed Sensing, Wavelet Analysis, Spectral Analysis, Scientific Computing"
+featured: true
+date: "2024-07-31"
+---
+
+## Overview
+
+Developed advanced MATLAB signal processing pipeline as part of the NSF EPSCoR-funded RIPP (Research and Innovative Projects Program) at University of Alabama in Huntsville. Analyzed multi-decade spacecraft datasets with multi-week observation gaps to validate heliospheric turbulent transport models and understand fundamental solar wind physics.
+
+## Challenge
+
+Voyager 2 and other spacecraft datasets contain significant temporal gaps (weeks to months) where no observations were available. Traditional spectral and wavelet analysis techniques fail on gapped time-series data. The challenge was to reconstruct missing data accurately enough to enable meaningful turbulence analysis across these gaps.
+
+## Solution
+
+### Basis Pursuit Denoise (BPD) via Compressed Sensing
+Implemented a compressed sensing approach that leverages the sparsity structure of solar wind signals in wavelet domain:
+
+```matlab
+% Compressed sensing reconstruction
+[N, ~] = size(gappedData);
+wavelet = 'db4'; % Daubechies-4 for multi-scale analysis
+
+% Generate wavelet dictionary for sparse representation
+dictionary = generateWaveletDictionary(N, wavelet);
+
+% Solve l1-minimization problem (Basis Pursuit Denoise)
+% min ||x||_1 + lambda * ||Ax - b||_2^2
+options = struct('maxiter', 5000, 'tol', 1e-6);
+reconstructed = solveBPD(dictionary, gappedData, mask, lambda, options);
+
+% Validate reconstruction quality
+errorMetric = norm(reconstructed(validIndices) - original(validIndices)) / norm(original(validIndices));
+```
+
+### Multi-Spacecraft Dataset Analysis
+- **Voyager 2**: Primary dataset for long-term solar wind turbulence
+- **Helios Probes**: High time-resolution data closer to the sun
+- **Pioneer 10/11**: Complementary observations at different heliolatitudes
+- **Ulysses**: Out-of-ecliptic plane data for 3D turbulence structure
+
+## Technical Approach
+
+1. **Spectral Analysis**: Compute power spectral density (PSD) to identify turbulent energy cascade
+2. **Wavelet Decomposition**: Multi-scale decomposition to separate local turbulent structures
+3. **Gap Reconstruction**: Apply BPD to estimate missing samples while preserving turbulent statistics
+4. **Cross-Validation**: Compare reconstructed spectra against overlapping data from other spacecraft
+5. **Physical Interpretation**: Validate findings against heliospheric turbulent transport theory
+
+## Key Findings
+
+- Successfully reconstructed multi-week data gaps with reconstruction errors < 5%
+- Confirmed power-law scaling (Kolmogorov k^-5/3) in reconstructed spectral data
+- Identified coherent structures in wavelet analysis consistent with MHD turbulence theory
+- Demonstrated feasibility of compressed sensing for solar wind data analysis
+
+## Results & Impact
+
+- Contribution to NSF EPSCoR research program validating heliospheric turbulence models
+- Publications and presentations at physics/astrophysics conferences
+- Demonstrated advanced signal processing techniques applicable to gapped time-series data
+- Practical application of compressed sensing theory to real-world spacecraft physics

@@ -1,0 +1,43 @@
+---
+title: "Real-Time Environmental Monitoring System (CGI Capstone)"
+description: "Designed and deployed a real-time sensor monitoring system for data center infrastructure using IoT hardware and cloud deployment."
+technologies: "Node.js, Express, MariaDB, AWS EC2, Docker, MQTT, LoRa 915MHz"
+githubUrl: "https://github.com/thomasfarrell/cgi-capstone"
+featured: true
+date: "2026-05-14"
+---
+
+## Overview
+
+Architected and deployed a production-grade real-time environmental monitoring system for CGI's data center infrastructure. The system continuously captures environmental telemetry (temperature, humidity, barometric pressure, air quality, vibration) from distributed LoRa sensors, processes the data through an API layer, and enables proactive server failure detection and infrastructure management.
+
+## Key Features
+
+- **Distributed Sensor Network**: Integrated production LoRa 915 MHz hardware through WisMesh MQTT gateway for continuous environmental telemetry across multiple data center zones
+- **Real-Time Data Processing**: Node.js/Express API layer for live sensor data ingestion, validation, and aggregation
+- **Scalable Schema Design**: Six-table relational schema in MariaDB anchored to central node, enabling efficient sensor data storage and complex API queries
+- **Production Deployment**: Containerized via Docker and deployed to AWS EC2 with automated scaling capabilities
+
+## Technical Highlights
+
+- Designed relational database schema optimized for time-series sensor data and historical analysis
+- Implemented MQTT subscriber pattern for reliable data ingestion from distributed sensors
+- Built RESTful API endpoints for real-time sensor queries and historical data retrieval
+- Containerized application for reproducible deployment and horizontal scaling
+
+## Architecture
+
+```
+[LoRa Sensors] → [WisMesh MQTT Gateway] → [EC2 Docker Container]
+                                             ↓
+                                        Express API
+                                             ↓
+                                        MariaDB (6-table schema)
+```
+
+## Results & Impact
+
+- System successfully detects anomalous environmental conditions in real-time
+- Enables data center operations team to make proactive infrastructure decisions
+- Provides historical analytics for capacity planning and trend analysis
+- Capstone project demonstrating full-stack IoT application design and deployment
