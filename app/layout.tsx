@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import React from 'react'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
 import RightPanel from '@/components/RightPanel'
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="retro-box">
             <div className="retro-box-title retro-box-title-orange">Why The Site?</div>
             <div style={{ padding: '6px 10px 10px', fontSize: '0.72rem', lineHeight: 1.7, color: '#444' }}>
-              I just wanted a place to share stuff that didn't fit on one page. Everythings a work in progress
+              I just wanted a place to share stuff that didn't fit on one page. Everything's a work in progress.
             </div>
           </div>
 
